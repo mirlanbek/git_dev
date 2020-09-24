@@ -1,15 +1,17 @@
- TTL 1D
-@	IN SOA	yumserver.osh.kg root.osh.kg.  (
+$TTL 1D
+@	IN SOA	master.osh.kg root.osh.kg.  (
 					0	; serial
 					1D	; refresh
 					1H	; retry
 					1W	; expire
 					3H )	; minimum
-		NS	yumserver.osh.kg.
-@		A	10.0.0.217
+		NS	master.osh.kg.
+@		A	192.168.122.10
 	
 
-217		PTR	yumserver
-91		PTR	server1
-247		PTR	server2
-248		PTR	server3
+10		PTR	master
+208		PTR	server1
+28		PTR	server2
+20		PTR	server3
+111		PTR	server4
+

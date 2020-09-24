@@ -1,15 +1,16 @@
 $TTL 1D
-@	IN SOA	yumserver.osh.kg root.osh.kg.  (
+@	IN SOA	master.osh.kg root.osh.kg.  (
 					0	; serial
 					1D	; refresh
 					1H	; retry
 					1W	; expire
 					3H )	; minimum
-		NS	yumserver.osh.kg.
-@		A	10.0.0.217
+		NS	master.osh.kg.
+@		A	192.168.122.10
 	
 
-yumserver	A	10.0.0.217
-server1		A	10.0.0.91
-server2		A	10.0.0.247
-server3		A	10.0.0.248
+master    	A	192.168.122.10
+server1		A	192.168.122.208
+server2		A	192.168.122.28
+server3		A	192.168.122.20
+server4		A	192.168.122.111
