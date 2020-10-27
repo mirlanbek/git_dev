@@ -1,0 +1,76 @@
+git config --global color.ui auto
+
+When you forked:
+add upsteram to keep my fork up to date:
+
+git remote -v
+
+git remote add upstream git@github.com:janesma/mesa_jenkins.git
+
+git fetch upstream
+git rebase upstream/master
+
+git push
+
++++++++++++++++++++++++++++++++++++++++++++++++++
+
+set passwordless push to github:
+Personal Settings: --> SSH and GPG keys ---> new ssh key add
+put .ssh/id_rsa.pub
+
+git remote show origin         ----- see if url is correct if not:
+
+git remote set-url origin git+ssh://git@github.com/username/reponame.git
+
+
+
++++++++++++++++++++++++++++++++++++++++++++
+
+GIT reflog: USE it for recovering deleted branch (only locally, if you del local repo reflog starts first clone)
+1. reflog
+2. get commit id for del branch
+3. git checkout commit_id
+4. git checkout -b new_name for lost branch  
+
+
+++++++++++++++++++++++
+GIT SQUASH:
+to sqash we use rebase command:
+git rebase -i HEAD~3  -------  sqash 3 commits from top --→  leave ‘pick’ on 1st commit, on other two chane pick → squash (or just ‘s’) and save exit, git log, should  see squash
+
+++++++++++++++++++++++++++++
+git show HEAD  ---- shows head with diff                    ← imp
+git clean -fdx                              ------- cleans all changes including under .git ignor and untracked to the state fresh cloned
+           git checkout -b mirlan        ----- create local branch MIRLAN
+git push --set-upstream origin mirlan  ---create remote branch MIRLAN + push
+git push origin mirlan  ---- push to origin mirlan
+
+git push origin --delete mirlan
+git push --delete origin mirlan
+
+git remote show origin    ---- list remote branches  or git branch -a
+git config --list
+
+git remote add origin  git@github.com:mirlanbek/mygitrepo.git   ----?
+git reset - -hard fer34rmjr34tm35r34rf33f
++++++++++++++++++++++++++++++++++++++++++++++++
+                                                           git rebase: 
+you’ve made a lot of changes on ur branchand want to push, but you are way behind origin master. Here git rebase comes to play:
+
+1. stage changes    2. commit  changes 3.git log you will see ur chnge on top:
+
+git checkout master, git fetch, git checkout back ur branch. Now:
+git rebase origin/master   (if slash between origin and master means local origin master created by fetch) 
+
+git log :  u’ll see, first rebased, and ur patch applied on top of rebase
+
+
+MERGE in CLI on GITHAB:
+git checkout master
+git merge mirlan
+git push origin master
+
+git format-patch origin/master..master
+git send-email --to=maintainer@project.com --from=me@here.com ... *.patch
+git am *.eml
+

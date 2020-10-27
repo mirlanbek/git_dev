@@ -1,0 +1,8 @@
+NET1_IP=192.168.1.80
+NEW_IP=192.168.56.12
+NIC1=enp0s3
+NIC2=enp0s8
+NIC3=enp0s9
+HOSTNAME=server2.osh.kg
+
+
