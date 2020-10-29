@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# all vars set here
+
+
+M_MANAGMENT_IP=192.168.1.79
+M_IP=192.168.56.10
+M_HOSTNAME=nismaster
+
+DOMAIN=osh.kg
+DEST=/root
+NET2=enp0s8
+
+
+C_MANAGMENT_IP=192.168.1.80
+C_IP=192.168.56.20
+C_HOSTNAME=nisclient
+
+
+
