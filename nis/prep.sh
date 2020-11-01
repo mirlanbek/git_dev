@@ -47,7 +47,7 @@ EOF
 
 ##configure enp0s3
 
-
+# Please use sed command to change value 
 cat > /etc/sysconfig/network-scripts/ifcfg-$NET1  <<EOF
 TYPE=Ethernet
 PROXY_METHOD=none
