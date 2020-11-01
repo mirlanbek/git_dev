@@ -34,6 +34,7 @@ domainname $DOMAIN
 
 
 # Configure network
+
 cat > /etc/sysconfig/network-scripts/ifcfg-$NET2 <<EOF
 BOOTPROTO=static
 NAME=$NET2
@@ -44,4 +45,25 @@ NETMASK=255.255.255.0
 
 EOF
 
+##configure enp0s3
+
+
+cat > /etc/sysconfig/network-scripts/ifcfg-$NET1  <<EOF
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=dhcp
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=enp0s3
+UUID=84ba1b44-dd48-439e-b03a-7747824aa529
+DEVICE=enp0s3
+ONBOOT=on
+
+EOF
 restart_network
