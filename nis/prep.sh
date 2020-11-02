@@ -47,23 +47,18 @@ EOF
 
 ##configure enp0s3
 
-# Please use sed command to change value 
-cat > /etc/sysconfig/network-scripts/ifcfg-$NET1  <<EOF
-TYPE=Ethernet
-PROXY_METHOD=none
-BROWSER_ONLY=no
-BOOTPROTO=dhcp
-DEFROUTE=yes
-IPV4_FAILURE_FATAL=no
-IPV6INIT=yes
-IPV6_AUTOCONF=yes
-IPV6_DEFROUTE=yes
-IPV6_FAILURE_FATAL=no
-IPV6_ADDR_GEN_MODE=stable-privacy
-NAME=enp0s3
-UUID=84ba1b44-dd48-439e-b03a-7747824aa529
-DEVICE=enp0s3
+sed -i s/ONBOOT=no/ONBOOT=on/ /etc/sysconfig/network-scripts/ifcfg-$NET1
 ONBOOT=on
 
-EOF
 restart_network
+
+##install rpcbind, yp-tools, ypserv, and ypbind
+
+install_nis_packages () {
+yum clean all
+yum install rpcbind yp-tools ypserv ypbind -y
+}
+install_nis_packages
+
+start_enable_nis_services
+

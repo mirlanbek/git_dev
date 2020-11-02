@@ -5,3 +5,34 @@ restart_network (){
 systemctl restart network
 
 }
+
+start_enable_nis_services (){
+systemctl start rpcbind
+systemctl enable rpcbind
+ 
+systemctl start ypserv
+systemctl enable ypserv
+
+systemctl start ypxfrd
+systemctl enable ypxfrd
+
+systemctl start ypbind
+systemctl enable ypbind
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
