@@ -32,6 +32,7 @@ sleep 2
 
 domainname $DOMAIN
 
+h=`hostname`
 
 # Configure network
 
@@ -52,6 +53,7 @@ sed -i s/ONBOOT=no/ONBOOT=on/ /etc/sysconfig/network-scripts/ifcfg-$NET1
 restart_network
 
 ##install rpcbind, yp-tools, ypserv
+
 yum install rpcbind yp-tools ypserv -y
 sleep 3
 
@@ -60,4 +62,68 @@ systemctl start rpcbind ypserv ypxfrd
 sleep 3
 
 systemctl enable rpcbind ypserv ypxfrd
+
+#configure local dns
+
+cat > /etc/hosts << EOF
+localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+192.168.1.74 nismaster
+192.168.1.79 nisclient
+EOF
+
+if grep -q $DOMAIN /etc/yp.conf ; then
+
+echo "bar eken e "
+else
+echo "ypserver nismaster" >> /etc/yp.conf
+echo "domain $DOMAIN" >> /etc/yp.conf
+
+fi
+
+# configure nsswitch.conf
+
+
+sed -i 's/passwd:     files sss/passwd:  nis files sss/' /etc/nsswitch.conf
+sed -i 's/shadow:     files sss/shadow:  nis files sss/' /etc/nsswitch.conf
+sed -i 's/group:      files sss/group:   nis files sss/' /etc/nsswitch.conf 
+
+
+# starting nis master server
+if [[ $h == $M_HOSTNAME  ]] ; then
+	/usr/lib64/yp/ypinit -m
+	sleep 1
+	echo "start compileing with Make"
+	pushd /var/yp 
+	make
+	popd
+        systemctl restart ypbind
+        systemctl enable ypbind
+fi
+
+
+echo "nis master is started"
+
+sleep 1
+
+ 
+
+if [[ $h == $C_HOSTNAME  ]] ; then
+	/usr/lib64/yp/ypinit -s $M_HOSTNAME
+	systemctl restart ypbind
+	systemctl enable ypbind
+fi
+
+echo "nis client started"
+
+sleep 1
+
+#
+
+
+
+
+
+
+
 
