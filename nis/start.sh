@@ -2,9 +2,11 @@
 
 iptables -F
 
+. config
 
+hosts=($M_MANAGMENT_IP $C_MANAGMENT_IP)
 
-for host in `cat hosts` ; do
+for host in ${hosts[@]} ; do
 	if grep -q $host ~/.ssh/known_hosts ; then
 		 sed -i /$host/d ~/.ssh/known_hosts
 	fi
@@ -13,7 +15,7 @@ done
 
 # copy all files to remote servers
 
-for host in `cat hosts` ; do
+for host in  ${hosts[@]} ; do
     scp config	functions  prep.sh root@$host:~
 done
 
@@ -23,7 +25,7 @@ sleep 2
 
 # Execute binaries
 
-for host in $(cat hosts); do
+for host in ${hosts[@]} ; do
     ssh root@$host 'cd && bash -x prep.sh | tee -a prep.log'
 done
 

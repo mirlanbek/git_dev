@@ -68,8 +68,8 @@ systemctl enable rpcbind ypserv ypxfrd
 cat > /etc/hosts << EOF
 localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-192.168.1.74 nismaster
-192.168.1.79 nisclient
+$M_MANAGEMENT_IP nismaster
+$C_MANAGEMENT_IP nisclient
 EOF
 
 if grep -q $DOMAIN /etc/yp.conf ; then
