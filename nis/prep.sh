@@ -118,8 +118,44 @@ echo "nis client started"
 
 sleep 1
 
-#
 
+ypcat passwd
+
+### install nfs - utils
+
+yum install nfs-utils -y
+
+if [[ $cur_ip == $M_MANAGMENT_IP ]] ; then
+cat > /etc/exports << EOF
+/home $C_MANAGMENT_IP (rw,sync,no_root_squash)
+EOF
+fi
+systemctl restart nfs-server
+sleep 2
+systemctl enable  nfs-server
+
+###mounting the NFS folder
+if [[ $cur_ip == $C_MANAGMENT_IP  ]] ; then
+mount $M_MANAGMENT_IP:/home /mnt/
+
+fi
+
+#####setting up autofs
+
+yum install autofs -y
+
+sed -i '/\/home/d' /etc/auto.master
+echo "/home /etc/auto.home" >> /etc/auto.master
+
+sleep 2
+
+cat > /etc/auto.home << EOF
+*  $M_MANAGMENT_IP:/home/&
+
+EOF
+
+systemctl start autofs.service
+systemctl enable autofs.service
 
 
 
